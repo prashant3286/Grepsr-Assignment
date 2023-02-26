@@ -16,3 +16,41 @@ exports.sendEmail = async (req, res) => {
         res.json(data);
     });
 };
+
+exports.getEmails = (req, res) => {
+    const email = req.query.email
+    const start = req.query.start
+    const end = req.query.end
+
+    let filter = {}
+    if (email) {
+        filter = {...filter, emailAddress: email}
+    }
+    if (start) {
+        filter = {
+            ...filter,
+            sentDate: {
+                ...filter.sentDate,
+                $gt: start
+            }
+        }
+    }
+    if (end) {
+        filter = {
+            ...filter,
+            sentDate: {
+                ...filter.sentDate,
+                $lt: end
+            }
+        }
+    }
+    Email.find(filter).exec((err, data) => {
+        if (err) {
+            console.error(err)
+            return res.status(500).json({
+                "message": "Something went wrong"
+            });
+        }
+        res.json(data);
+    });
+}

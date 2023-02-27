@@ -2,6 +2,18 @@
 
 Email Service API is an API for sending email, query based on time range provided, query based on email address and query based on both time range and email address. Written in NodeJS
 
+### Programming Language and Framework Used:
+- Nodejs, Express.js
+
+### Database Used:
+- Mongoose
+
+- You can find the information of above tech stack by clicking the following links
+[https://mongoosejs.com/](monggose)
+[https://nodejs.org/en/](nodejs)
+[https://expressjs.com/](express.js)
+
+
 ## Prerequisites
 
 You need to have node and npm installed.

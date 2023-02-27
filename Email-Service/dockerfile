@@ -25,4 +25,4 @@ ENV RABBITMQ_URL=amqp://rabbitmq:5672
 RUN npm run build
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]

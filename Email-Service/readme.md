@@ -38,5 +38,7 @@ GET Method
 
 queryby:
 timerange
+
 email address
+
 both timerange and email address

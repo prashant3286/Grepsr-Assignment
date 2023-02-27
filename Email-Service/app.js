@@ -1,3 +1,12 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+require('dotenv').config();
+
+const MessageBroker = require('./broker')
+
 // import routes
 const emailRoutes = require('./routes/email');
 const { sendMail } = require('./mailer');

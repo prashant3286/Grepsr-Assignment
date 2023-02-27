@@ -7,10 +7,9 @@ exports.sendEmail = async (req, res) => {
     const now = new Date()
     const email = new Email({...req.body, sentDate: now.toISOString().split('T')[0], status: "SENT"})
 
-     // send message to queue
-     instance = await broker.getInstance()
-     instance.send('email_queue', Buffer.from(JSON.stringify(email)))
- 
+    // send message to queue
+    instance = await broker.getInstance()
+    instance.send('email_queue', Buffer.from(JSON.stringify(email)))
 
     //save to db
     email.save((err, data) => {

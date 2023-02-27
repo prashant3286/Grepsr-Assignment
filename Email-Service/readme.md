@@ -21,6 +21,7 @@ RABBIT_URL=amqp://rabbitmq:5672
 ```
 The server should be running locally then...
 
+You can test this through [POSTMAN](https://www.postman.com/)
 
 ## Endpoints
 
@@ -37,6 +38,7 @@ GET Method
 /email/getemails
 
 queryby:
+
 timerange
 
 email address

@@ -8,9 +8,15 @@ Email Service API is an API for sending email, query based on time range provide
 ### Database Used:
 - Mongoose
 
+### Message broker
+- RabbitMq
+
 - You can find the information of above tech stack by clicking the following links
-[https://mongoosejs.com/](monggose)
+
+[https://mongoosejs.com/](mongoose)
+
 [https://nodejs.org/en/](nodejs)
+
 [https://expressjs.com/](express.js)
 
 
@@ -49,7 +55,7 @@ GET Method
 
 /email/getemails
 
-queryby:
+** queryby:**
 
 timerange
 

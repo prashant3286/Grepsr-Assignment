@@ -4,8 +4,10 @@ services:
   app:
     build: .
     depends_on:
-      - mongo
-      - rabbitmq
+      mongo:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     ports:
       - 8000:8000
     environment:
@@ -19,10 +21,16 @@ services:
     restart: always
     ports:
       - 27017:27017
-    logging:
-      driver: none
     volumes:
       - ./mongo/data:/data/db
+    healthcheck:
+      test:  echo 'db.runCommand("ping").ok' | mongosh mongo:27017/emaildb --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    networks:
+      - rabbitmq_nodejs
 
   rabbitmq:
     image: rabbitmq
@@ -30,11 +38,13 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-    logging:
-      driver: none
     networks:
       - rabbitmq_nodejs
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
   rabbitmq_nodejs:
-    driver: bridge

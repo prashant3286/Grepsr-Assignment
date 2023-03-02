@@ -16,8 +16,8 @@ const app = express();
 
 setup = async () => {
     try {
-        mongoose.connect(process.env.DATABASE, err=> {
-            console.error("Mongoose can't connect. Error: ", err)
+        mongoose.connect(process.env.DATABASE, {
+            family: 4
         })
         const instance = await MessageBroker.getInstance()
 

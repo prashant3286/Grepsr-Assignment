@@ -5,7 +5,7 @@ const broker = require('../broker')
 exports.sendEmail = async (req, res) => {
     // for now, declaring the email as sent already
     const now = new Date()
-    const email = new Email({...req.body, sentDate: now.toISOString().split('T')[0], status: "SENT"})
+    const email = new Email({ ...req.body, sentDate: now.toISOString().split('T')[0], status: "SENT" })
 
     // send message to queue
     instance = await broker.getInstance()
@@ -13,22 +13,22 @@ exports.sendEmail = async (req, res) => {
 
     //save to db
     try {
-        const resp = await email.save(data)
-        return res.json(resp)
+        const data = await email.save(email)
+        return res.json(data)
     } catch(err) {
         console.error(err)
         return res.status(500).json({ "message": "Something went wrong" })
     }
 };
 
-exports.getEmails = (req, res) => {
+exports.getEmails = async (req, res) => {
     const email = req.query.email
     const start = req.query.start
     const end = req.query.end
 
     let filter = {}
     if (email) {
-        filter = {...filter, emailAddress: email}
+        filter = { ...filter, emailAddress: email }
     }
     if (start) {
         filter = {
@@ -48,13 +48,15 @@ exports.getEmails = (req, res) => {
             }
         }
     }
-    Email.find(filter).exec((err, data) => {
-        if (err) {
-            console.error(err)
-            return res.status(500).json({
-                "message": "Something went wrong"
-            });
-        }
-        res.json(data);
-    });
+
+    try {
+        const data = await Email.find(filter).exec()
+        return res.json(data)
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({
+            "message": "Something went wrong"
+        });
+    }
 }

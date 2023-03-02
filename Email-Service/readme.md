@@ -62,3 +62,39 @@ timerange
 email address
 
 both timerange and email address
+
+
+Architecture Diagram:
+
+                                  +---------------+
+                                  |               |
+                                  |   API Server  |
+                                  |               |
+                                  +---------------+
+                                           |
+                                           | HTTP
+                                           |
+                                  +---------------+
+                                  |               |
+                                  |   sendEmail |
+                                  |     Queue     |
+                                  |               |
+                                  +---------------+
+                                           |
+                                           | AMQP
+                                           |
+                                  +---------------+
+                     +---------->|               |
+                     |            | RabbitMQ      |
+                     |            | Message Broker|
+                     |            |               |
+                     |            +---------------+
+                     |                     |
+                     |                     | AMQP
+                     |                     |
+           +---------------+      +---------------+
+           |               |      |               |
+           |   MongoDB     |<-----|  getEmails     |
+           |   Database    |      |     Queue     |
+           |               |      |               |
+           +---------------+      +---------------+

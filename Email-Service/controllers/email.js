@@ -12,13 +12,13 @@ exports.sendEmail = async (req, res) => {
     instance.send('email_queue', Buffer.from(JSON.stringify(email)))
 
     //save to db
-    email.save((err, data) => {
-        if (err) {
-            console.log(err)
-            return res.status(500).json({"message": "Something went wrong"})
-        }
-        res.json(data);
-    });
+    try {
+        const resp = await email.save(data)
+        return res.json(resp)
+    } catch(err) {
+        console.error(err)
+        return res.status(500).json({ "message": "Something went wrong" })
+    }
 };
 
 exports.getEmails = (req, res) => {

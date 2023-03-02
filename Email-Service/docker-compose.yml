@@ -2,14 +2,12 @@ version: '3.8'
 
 services:
   app:
-    container_name: app
     build: .
     depends_on:
-      - rabbitmq
       - mongo
+      - rabbitmq
     ports:
       - 8000:8000
-    restart: on-failure
     environment:
       - DATABASE=mongodb://mongo:27017/emaildb
       - RABBIT_URL=amqp://rabbitmq:5672
@@ -17,7 +15,6 @@ services:
       - rabbitmq_nodejs
 
   mongo:
-    container_name: mongo
     image: mongo
     restart: always
     ports:
@@ -26,11 +23,8 @@ services:
       driver: none
     volumes:
       - ./mongo/data:/data/db
-    networks:
-      - rabbitmq_nodejs
 
   rabbitmq:
-    container_name: rabbitmq
     image: rabbitmq
     restart: always
     ports:
